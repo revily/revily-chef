@@ -1,0 +1,29 @@
+# Put files/directories that should be ignored in this file.
+# Lines that start with '# ' are comments.
+
+# emacs
+*~
+
+# vim
+*.sw*
+
+# subversion
+*/.svn/*
+
+# scm revert files
+**.orig
+
+# Mac finder artifacts
+.DS_Store
+
+# Netbeans project directory
+/nbproject/
+
+# RubyMine project files
+.idea
+
+# Textmate project files
+/*.tmproj
+
+# Sublime Text files
+**.sublime-*
