@@ -1,23 +1,22 @@
 #!/usr/bin/env bash
 # set -e
 
-if [ "$1" = "-v" ]; then
-  exec 3>&1
-else
-  exec 3>/dev/null
-fi
+. `dirname $0`/_common
 
-banner()  { echo "-----> $*" ; }
-info()    { echo "       $*" ; }
-warn()    { echo ">>>>>> $*" >&2 ; }
+function bundle_install() {
+  local bundler_args="--binstubs .bin --path vendor/bundle"
+  local ci_bundler_args="--without local development staging production"
 
-banner "Running bundler"
-export PATH=".bin:$PATH"
-rm -rf .bundle
-if [ $CI ]; then
-  bundle install --binstubs .bin --path vendor/bundle --without local development staging production "$@"
-else
-  bundle install --binstubs .bin --path vendor/bundle "$@"
-fi
+  banner "Running bundler"
+  export PATH=".bin:$PATH"
+  rm -rf .bundle
 
-info "Done!"
+  if [ $CI ]; then
+    ./script/wad
+  else
+    bundle install $bundler_args "$@" >&3 2>&1
+  fi
+}
+
+bundle_install
+finalize
