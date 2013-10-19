@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: revily
-# Recipe:: default
+# Recipe:: users
 #
 # Copyright 2013, Applied Awesome LLC.
 #
@@ -17,16 +17,13 @@
 # limitations under the License.
 #
 
-ruby_block "revily_service_trigger" do
-  block do
-    # Revily service action trigger for LWRP's
-  end
-  action :nothing
+# Create a user for Revily services to run as
+user node['revily']['user']['username'] do
+  system true
+  shell node['revily']['user']['shell']
+  home node['revily']['user']['home']
 end
 
-case node['revily']['install_type']
-when "package"
-  include_recipe "revily::_install_from_package"
-when "source"
-  include_recipe "revily::_install_from_source"
+group node['revily']['user']['username'] do
+  members [node['revily']['user']['username']]
 end

@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: revily
-# Recipe:: default
+# Recipe:: ruby
 #
 # Copyright 2013, Applied Awesome LLC.
 #
@@ -17,16 +17,14 @@
 # limitations under the License.
 #
 
-ruby_block "revily_service_trigger" do
-  block do
-    # Revily service action trigger for LWRP's
-  end
-  action :nothing
+include_recipe "rbenv::default"
+include_recipe "rbenv::ruby_build"
+
+rbenv_ruby node['revily']['ruby']['version']
+
+rbenv_gem "bundler" do
+  ruby_version node['revily']['ruby']['version']
+  version node['revily']['ruby']['bundler_version']
 end
 
-case node['revily']['install_type']
-when "package"
-  include_recipe "revily::_install_from_package"
-when "source"
-  include_recipe "revily::_install_from_source"
-end
+node.set['revily']['ruby']['bundler_shim'] = "#{node['rbenv']['root_path']}/shims/bundle"

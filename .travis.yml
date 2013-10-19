@@ -5,6 +5,6 @@ env:
   global:
   - S3_REGION="us-east-1"
   - S3_BUCKET_NAME="revily-chef-bundle"
-  - secure: RISOHPa+ZMQVwwH1sr7q+OxHm/uZKs0tQF+Sm6jFP1NPoUbvg1MSLFf13lSx7tZEpzxz4r/SJZK2g5XmqaSZJqoC+gLWJxQHVxgn1+MqArWpZaRjXFGL/hOi8HJBJ1yjaVw9yrp4ds4sy+hy/OTb+2iCRgSIZZR43gZAzfCqgjw=
+  - secure: "jzHHjr8Ernl4Nkwjeyj9kEmUn20J7xk0y0IKSJ+Ot/JZNTlIhXBHupCuS6PFxVqsWb3osiCpf2sKwfm+GQITN8LV3Itx1Q6twVjNcrrAHVtwOHBDbMqlCo4CSz/uvg1Swe5vwl8u2TOTV7X+G7gDxOBqOTqxpjqU8ozkAC5ZSMI="
 install: "script/bootstrap"
 script: "script/cibuild"

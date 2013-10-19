@@ -1,0 +1,10 @@
+upstream <%= @name %> {
+  <%- node['revily']['lb']['upstream'][@name].each do |server| -%>
+  server <%= server %>:<%= node['revily'][@name]['port'] %>;
+  <%- end -%>
+}
+
+server {
+  listen <%= @server_port %>;
+  server_name <%= @server_name %>;
+}

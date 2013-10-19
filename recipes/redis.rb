@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: revily
-# Recipe:: default
+# Recipe:: redis
 #
 # Copyright 2013, Applied Awesome LLC.
 #
@@ -17,16 +17,13 @@
 # limitations under the License.
 #
 
-ruby_block "revily_service_trigger" do
-  block do
-    # Revily service action trigger for LWRP's
-  end
-  action :nothing
-end
+node.set['redisio']['version'] = node['revily']['redis']['version']
+node.set['redisio']['mirror'] = 'http://download.redis.io/releases'
+node.set['redisio']['servers'] = [
+  node['revily']['redis']['servers']['sidekiq'],
+  node['revily']['redis']['servers']['cache'],
+  node['revily']['redis']['servers']['session']
+]
 
-case node['revily']['install_type']
-when "package"
-  include_recipe "revily::_install_from_package"
-when "source"
-  include_recipe "revily::_install_from_source"
-end
+include_recipe "redisio::install"
+include_recipe "redisio::enable"
